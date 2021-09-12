@@ -1,6 +1,6 @@
 package com.todo.menu;
 public class Menu {
-
+	// 선택지를 출력해주는 static 메소드 
     public static void displaymenu()
     {
         System.out.println();

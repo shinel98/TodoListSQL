@@ -6,7 +6,7 @@ import com.todo.dao.TodoItem;
 import com.todo.dao.TodoList;
 
 public class TodoUtil {
-	
+	// 새로운 TodoList 를 파라미터로 받아서, title과 desc를 입력해서 title이 중복되지 않으면, 리스트에 추가해주는 static 메소드 
 	public static void createItem(TodoList list) {
 		
 		String title, desc;
@@ -28,17 +28,17 @@ public class TodoUtil {
 		TodoItem t = new TodoItem(title, desc);
 		list.addItem(t);
 	}
-
+	// list 를 파라미터로 받고 user가 title 을 입력하면, list에 있는 title과 일치하면 리스트에서 삭제해주는 메소드 
 	public static void deleteItem(TodoList l) {
 		
 		Scanner sc = new Scanner(System.in);
-		String title = sc.next();
+		
 		
 		System.out.println("\n"
 				+ "========== Delete Item Section\n"
 				+ "enter the title of item to remove\n"
 				+ "\n");
-		
+		String title = sc.next();
 		for (TodoItem item : l.getList()) {
 			if (title.equals(item.getTitle())) {
 				l.deleteItem(item);
@@ -47,7 +47,8 @@ public class TodoUtil {
 		}
 	}
 
-
+	/* list를 파라미터로 받아서, 바꾸고싶은 title을 user에게 입력받고, title이 리스트에 존재는지 않는지 체크 , 새로운 title을 입력받아, 리스트에 중복되는지 체크
+	중복이 모두 안되면 리스트에 추가  */ 
 	public static void updateItem(TodoList l) {
 		
 		Scanner sc = new Scanner(System.in);
@@ -81,7 +82,7 @@ public class TodoUtil {
 		}
 
 	}
-
+	// 리스트에서 TodoItem의 title과 desc를 하나씩 출력 
 	public static void listAll(TodoList l) {
 		for (TodoItem item : l.getList()) {
 			System.out.println("Item Title: " + item.getTitle() + "  Item Description:  " + item.getDesc());

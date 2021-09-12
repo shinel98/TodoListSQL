@@ -9,7 +9,7 @@ import com.todo.service.TodoUtil;
 public class TodoMain {
 	
 	public static void start() {
-	
+		
 		Scanner sc = new Scanner(System.in);
 		TodoList l = new TodoList();
 		boolean isList = false;
