@@ -9,17 +9,25 @@ import com.todo.service.TodoUtil;
 public class TodoMain {
 	
 	public static void start() {
-		
+	
 		Scanner sc = new Scanner(System.in);
 		TodoList l = new TodoList();
 		boolean isList = false;
 		boolean quit = false;
+		
+		TodoUtil.loadList(l, "todolist.txt");
+		
+		Menu.displaymenu();
 		do {
-			Menu.displaymenu();
+			Menu.prompt();
 			isList = false;
 			String choice = sc.next();
 			switch (choice) {
 
+			case "help":
+				Menu.displaymenu();
+				break;
+				
 			case "add":
 				TodoUtil.createItem(l);
 				break;
@@ -57,11 +65,17 @@ public class TodoMain {
 				break;
 
 			default:
-				System.out.println("please enter one of the above mentioned command");
+				System.out.println();
+				System.out.println("명령어를 잘못 입력하셨습니다.");
+				System.out.println("위의 명령어중 하나를 입력해주세요.");
+				System.out.println();
 				break;
 			}
 			
 			if(isList) l.listAll();
 		} while (!quit);
+		
+		TodoUtil.saveList(l, "todolist.txt");
+		System.out.println(l.getList().size() + "개의 항목을 파일에 저장했습니다.");
 	}
 }

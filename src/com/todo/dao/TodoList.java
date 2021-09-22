@@ -37,9 +37,9 @@ public class TodoList {
 
 	public void listAll() {
 		System.out.println("\n"
-				+ "inside list_All method\n");
+				+ "리스트에 있는 내용들입니다. \n");
 		for (TodoItem myitem : list) {
-			System.out.println(myitem.getTitle() + myitem.getDesc());
+			System.out.println(myitem.getTitle() + " " + myitem.getDesc() + " " + myitem.getCurrent_date());
 		}
 	}
 	
@@ -61,4 +61,11 @@ public class TodoList {
 		}
 		return false;
 	}
+	
+	/*
+	public Boolean isEmpty(){
+		if(list.isEmpty()) return true;
+		else return false;
+	}
+	*/
 }
