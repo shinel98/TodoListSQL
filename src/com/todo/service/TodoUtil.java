@@ -78,7 +78,7 @@ public class TodoUtil {
 			return;
 		}
 		
-		System.out.println("새로운 설명을 입력해주세요. ");
+		System.out.println("새로운 내용을 입력해주세요. ");
 		String new_description = sc.nextLine().trim();
 		for (TodoItem item : l.getList()) {
 			if (item.getTitle().equals(title)) {
