@@ -20,7 +20,7 @@ public class TodoUtil {
 		
 		System.out.println("\n"
 				+ "========== 새로운 할일 작성\n"
-				+ "항목을 입력해주세요.\n");
+				+ "항목을 입력해주세요.");
 		
 		//title = sc.next();
 		title = sc.nextLine();
@@ -45,8 +45,7 @@ public class TodoUtil {
 		
 		System.out.println("\n"
 				+ "========== 할일 삭제\n"
-				+ "삭제할 항목을 입력해주세요.\n"
-				+ "\n");
+				+ "삭제할 항목을 입력해주세요.");
 		String title = sc.next();
 		for (TodoItem item : l.getList()) {
 			if (title.equals(item.getTitle())) {
@@ -54,6 +53,7 @@ public class TodoUtil {
 				break;
 			}
 		}
+		System.out.println("삭제되었습니다!");
 	}
 
 	/* list를 파라미터로 받아서, 바꾸고싶은 title을 user에게 입력받고, title이 리스트에 존재는지 않는지 체크 , 새로운 title을 입력받아, 리스트에 중복되는지 체크
@@ -64,8 +64,7 @@ public class TodoUtil {
 		
 		System.out.println("\n"
 				+ "========== 할일 수정\n"
-				+ "수정하고 싶은 항목을 입력해주세요.\n"
-				+ "\n");
+				+ "수정하고 싶은 항목을 입력해주세요.");
 		String title = sc.nextLine().trim();
 		if (!l.isDuplicate(title)) {
 			System.out.println("그런 항목은 존재하지 않습니다.");

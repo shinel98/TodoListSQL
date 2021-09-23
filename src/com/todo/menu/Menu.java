@@ -18,6 +18,7 @@ public class Menu {
     public static void prompt()
     {	
     	System.out.println();
-    	System.out.println("옵션을 선택하세요. (-help)");  	
+    	System.out.println("옵션을 선택하세요. (커맨드 보기 : help)");
+    	System.out.print(">");
     }
 }

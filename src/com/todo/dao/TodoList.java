@@ -37,7 +37,7 @@ public class TodoList {
 
 	public void listAll() {
 		System.out.println("\n"
-				+ "리스트에 있는 내용들입니다. \n");
+				+ "========목록========\n");
 		for (TodoItem myitem : list) {
 			System.out.println(myitem.getTitle() + " " + myitem.getDesc() + " " + myitem.getCurrent_date());
 		}
