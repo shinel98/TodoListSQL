@@ -21,8 +21,10 @@ public class TodoMain {
 		do {
 			Menu.prompt();
 			isList = false;
-			String choice = sc.next();
-			switch (choice) {
+			String choice = sc.nextLine();
+			//StringTokenizer st= new StringTokenizer(choice);
+			String[] choices = choice.split(" ");
+			switch (choices[0]) {
 
 			case "help":
 				Menu.displaymenu();
@@ -43,7 +45,14 @@ public class TodoMain {
 			case "ls":
 				TodoUtil.listAll(l);
 				break;
-
+			case "find":
+				TodoUtil.findKeyTitle(l, choices[1]);
+				break;
+				
+			case "find_cate":
+				TodoUtil.findKeyCate(l, choices[1]);
+				break;
+				
 			case "ls_name_asc":
 				l.sortByName();
 				isList = true;
@@ -60,6 +69,15 @@ public class TodoMain {
 				isList = true;
 				break;
 
+			case "ls_date_desc":
+				l.sortByDateDesc();
+				isList = true;
+				break;
+				
+			case "ls_cate":
+				TodoUtil.listCategory(l);
+				break;
+				
 			case "exit":
 				quit = true;
 				break;
