@@ -33,7 +33,7 @@ public class TodoUtil {
 		title = sc.nextLine();
 		
 		if (list.isDuplicate(title)) {
-			System.out.printf("항목은 중복될 수 없습니다.");
+			System.out.printf("항목이 중복됩니다!");
 			return;
 		}
 		
@@ -45,7 +45,8 @@ public class TodoUtil {
 		due_date = sc.nextLine().trim();
 		
 		TodoItem t = new TodoItem(title, desc, category, due_date);
-		list.addItem(t);
+		if(list.addItem(t)>0)
+			System.out.println("추가되었습니다.");
 	}
 	// list 를 파라미터로 받고 user가 title 을 입력하면, list에 있는 title과 일치하면 리스트에서 삭제해주는 메소드 
 	public static void deleteItem(TodoList l) {
@@ -72,8 +73,8 @@ public class TodoUtil {
 		 * sc.nextLine()으로 했을때는 왜 제대로 작동이 안하는 걸까??
 		 */
 		if(choice.equals("y")) {
-			l.deleteItem(it);
-			System.out.println("삭제되었습니다!");
+			if((l.deleteItem(it.getIndex())>0))
+				System.out.println("삭제되었습니다!");
 		}
 	}
 
@@ -91,9 +92,9 @@ public class TodoUtil {
 			System.out.println("그런 항목은 존재하지 않습니다.");
 			return;
 		}*/
-		int num = sc.nextInt();
-		TodoItem it = l.getList().get(num-1);
-		System.out.printf("%d. " + it + "\n", num);
+		int id = sc.nextInt();
+		TodoItem it = l.getList().get(id-1);
+		System.out.printf("%d. " + it + "\n", id);
 		
 		sc.nextLine();
 		
@@ -120,22 +121,20 @@ public class TodoUtil {
 				System.out.println("할일이 수정되었습니다.");
 			}
 		}*/
-		l.deleteItem(it);
+		//l.deleteItem(it.getIndex());
 		TodoItem t = new TodoItem(new_title, new_description, new_category, new_due_date);
-		l.addItem(t);
-		System.out.println("수정되었습니다.");
+		t.setIndex(id);
+		if(l.updateItem(t) > 0)
+			System.out.println("수정되었습니다.");
 	}
 	// 리스트에서 TodoItem의 title과 desc를 하나씩 출력 
 	public static void listAll(TodoList l) {
 		/*if(l.isEmpty()) {
 			System.out.println("저장된 내용이 없습니다.");
 		}*/
-		int i=1;
 		System.out.printf("[전체 목록, 총 %d개]\n", l.getList().size());
 		for (TodoItem item : l.getList()) {
-			item.setIndex(i);
-			System.out.printf(item.getIndex() +". [" + item.getCategory() + "]" + item.getTitle() + " - " + item.getDesc() +" - " + item.getDue_date() +  " - " + item.getCurrent_date() + "\n");
-			i++;
+			System.out.println(item.toString());
 		}
 	}
 	
@@ -185,29 +184,57 @@ public class TodoUtil {
 		System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
 	}
 	
-	public static void findKeyCate(TodoList l, String strtofind) {
+	public static void findCateList(TodoList l, String cate) {
 		int count = 0;
-		for(TodoItem item : l.getList()) {
-			if(item.getCategory().contains(strtofind)) {
-				System.out.printf(item.getIndex() +". [" + item.getCategory() + "]" + item.getTitle() + " - " + item.getDesc() +" - " + item.getDue_date() +  " - " + item.getCurrent_date() + "\n");
+		for(TodoItem item : l.getListCategory(cate)) {
+				System.out.println(item.toString());
 				count++;
 			}
+		System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
+	}
+	
+	
+	
+	public static void listCateAll(TodoList l) {
+		int count = 0;
+		for(String item : l.getCategories()) {
+			System.out.print(item + " ");
+			count++;
+		}
+		System.out.printf("\n총 %d개의 카테고리가 등록되어 있습니다.\n", count);
+	}
+		
+	
+	
+	public static void findList(TodoList l, String keyword) {
+		int count = 0;
+		for(TodoItem item : l.getList(keyword)) {
+			System.out.println(item.toString());
+			count++;
 		}
 		System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
 	}
 	
-	public static void listCategory(TodoList l) {
-		HashSet<String> set = new HashSet<>();
-		for(TodoItem it : l.getList()) {
-			set.add(it.getCategory());
+	public static void listAll(TodoList l, String orderby, int ordering) {
+		/*if(l.isEmpty()) {
+			System.out.println("저장된 내용이 없습니다.");
+		}*/
+		System.out.printf("[전체 목록, 총 %d개]\n", l.getCount());
+		for (TodoItem item : l.getOrderedList(orderby, ordering)) {
+			System.out.println(item.toString());
 		}
-		Iterator<String> iter = set.iterator();
-		while(iter.hasNext()) {
-			System.out.print(iter.next());
-			if(iter.hasNext())
-				System.out.print(" / ");	
-		}
-		System.out.println();
-		System.out.printf("총 %d개의 카테고리가 등록되어 있습니다.", set.size());
 	}
+	public static void completeItem(TodoList l, String number) {
+		int num = Integer.valueOf(number);
+		l.completeItem(num);
+		System.out.println("완료 체크 하였습니다.");
+	}
+	public static void listAll(TodoList l, int num) {
+		int count = 0;
+		for(TodoItem item : l.getList(1)) {
+			System.out.println(item.toString());
+			count++;
+		}
+		System.out.printf("총 %d개의 항목이 완료되었습니다.\n", count);
+	}	
 }

@@ -12,6 +12,7 @@ public class TodoItem {
     private String category;
     private String due_date;
     private int index;
+    private boolean is_completed;
 
     // TodoItem의 title, desc, date를 초기화해주는 생성자 
     public TodoItem(String title, String desc){
@@ -30,6 +31,16 @@ public class TodoItem {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  kk:mm:ss");
         this.current_date = sdf.format(new Date());
     }
+    public TodoItem(String title, String desc, String category, String due_date, boolean is_completed) {
+    	this.title=title;
+        this.desc=desc;
+        //this.current_date=new Date();
+        this.category = category;
+        this.due_date = due_date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  kk:mm:ss");
+        this.current_date = sdf.format(new Date());
+        this.is_completed = is_completed;
+    }
     
     public TodoItem(String strFromFile){
     	StringTokenizer st = new StringTokenizer(strFromFile , "##");
@@ -40,7 +51,13 @@ public class TodoItem {
 		this.current_date= st.nextToken();
     }
     
-    public int getIndex() {
+    public boolean isIs_completed() {
+		return is_completed;
+	}
+	public void setIs_completed(boolean is_completed) {
+		this.is_completed = is_completed;
+	}
+	public int getIndex() {
 		return index;
 	}
 	public void setIndex(int index) {
@@ -87,7 +104,10 @@ public class TodoItem {
     }
 	@Override
 	public String toString() {
-		return "[" + category + "]" + " " + title + " - " +desc +  " - " +due_date + "-" + current_date;
+		if(is_completed == true)
+			return "[" + category + "]" + " " + title + "[V]" + " - " +desc +  " - " +due_date + " - " + current_date;
+		else 
+			return "[" + category + "]" + " " + title + " - " +desc +  " - " +due_date + " - " + current_date;
 	}
 	
     

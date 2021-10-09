@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.todo.dao.TodoList;
 import com.todo.menu.Menu;
+import com.todo.service.DbConnect;
 import com.todo.service.TodoUtil;
 
 public class TodoMain {
@@ -12,10 +13,11 @@ public class TodoMain {
 	
 		Scanner sc = new Scanner(System.in);
 		TodoList l = new TodoList();
+		//l.importData("todolist.txt");
 		boolean isList = false;
 		boolean quit = false;
 		
-		TodoUtil.loadList(l, "todolist.txt");
+		//TodoUtil.loadList(l, "todolist.txt");
 		
 		Menu.displaymenu();
 		do {
@@ -46,36 +48,45 @@ public class TodoMain {
 				TodoUtil.listAll(l);
 				break;
 			case "find":
-				TodoUtil.findKeyTitle(l, choices[1]);
+				String keyword = choices[1].trim();
+				TodoUtil.findList(l, keyword);
 				break;
 				
 			case "find_cate":
-				TodoUtil.findKeyCate(l, choices[1]);
+				String cate = choices[1].trim();
+				TodoUtil.findCateList(l, cate);
 				break;
 				
 			case "ls_name_asc":
-				l.sortByName();
-				isList = true;
+				System.out.println("제목순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "title", 1);
 				break;
 
 			case "ls_name_desc":
-				l.sortByName();
-				l.reverseList();
-				isList = true;
+				System.out.println("제목순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "title", 0);
 				break;
 				
-			case "ls_date":
-				l.sortByDate();
-				isList = true;
+			case "ls_date_asc":
+				System.out.println("날짜순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "due_date", 1);
 				break;
 
 			case "ls_date_desc":
-				l.sortByDateDesc();
-				isList = true;
+				System.out.println("날짜역순으로 정렬하였습니다.");
+				TodoUtil.listAll(l, "due_date", 0);
 				break;
 				
 			case "ls_cate":
-				TodoUtil.listCategory(l);
+				TodoUtil.listCateAll(l);
+				break;
+			
+			case "comp":
+				TodoUtil.completeItem(l, choices[1]);
+				break;
+				 
+			case "ls_comp":
+				TodoUtil.listAll(l, 1);
 				break;
 				
 			case "exit":
@@ -93,7 +104,9 @@ public class TodoMain {
 			if(isList) l.listAll();
 		} while (!quit);
 		
+		
 		TodoUtil.saveList(l, "todolist.txt");
-		System.out.println(l.getList().size() + "개의 항목을 파일에 저장했습니다.");
+		//System.out.println(l.getList().size() + "개의 항목을 파일에 저장했습니다.");
+		DbConnect.closeConnection();
 	}
 }
